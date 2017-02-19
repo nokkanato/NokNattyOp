@@ -270,7 +270,7 @@ fjs.parentNode.insertBefore(js, fjs);
         });
         map.data.setStyle(styleFeature);
 
-        var infowindow = new google.maps.InfoWindow({map: map});
+        var infowindow = new google.maps.InfoWindow({map: map,  maxWidth: 320});
         if (session == null){
         if (navigator.geolocation) {
          navigator.geolocation.getCurrentPosition(function(position) {
