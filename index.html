@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Compiled and minified JavaScript -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script> -->
+    <!-- <LINK REL="SHORTCUT ICON" HREF="/material/img/favicon.ico"> -->
+
+    <!-- Scott's custom css -->
+    <!-- <link href="/material/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- load map -->
+    <!-- <script>window.onload = function() { load(); }; //this calls the load function in map.js and kicks off geolocation</script> -->
+
+  </head>
+
+
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style type="text/css">
+
+
+          /* Always set the map height explicitly to define the size of the div
+           * element that contains the map. */
+          #map {
+            height: 90%;
+            /*width: 70%;*/
+
+          }
+          /* Optional: Makes the sample page fill the window. */
+          html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-image: url("eartquake_background.jpg");
+            background-size: 100% 100%;
+
+          }
+
+          /*#sidebar {*/
+            /*width: 20%;*/
+            /*background-color: green;*/
+          /*}*/
+        </style>
+
+
+  <body style="padding:8%;padding-top:5%">
+
+    <!--  NEW ONE-->
+
+
+            <!-- NEWONE -->
+
+
+
+
+    <nav class="navbar navbar-default" >
+      <style>
+        .container-fluid{
+          background-color: #1988FF;
+          border: 0;
+        }
+      </style>
+      <div class="container-fluid" >
+
+
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+
+
+          <!-- <a class="navbar-brand" href="#">Brand</a> -->
+          <button type="button" class="btn " onclick="showSidebar()" aria-label="Left Align" style="margin-top:45%;background-color:#1988FF">
+            <span class="glyphicon glyphicon-th-list" aria-hidden="true" style="color:white"></span>
+          </button>
+        </div>
+
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> <h1 style="text-align:center;color:white;font-family:">Earthquake Reporter</h1>
+
+
+
+
+          <ul class="nav navbar-nav">
+
+
+
+          <!-- <form class="navbar-form navbar-right" >
+            <div class="form-group">
+              <input type="text" class="form-control"placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+
+            </button>
+
+          </form> -->
+
+
+        </div><!-- /.navbar-collapse
+
+
+          <!-- <div style="text-align:right;color:white;font-size:200%">Beware! Eartquake is coming to get your ass!</div>   -->
+
+
+      </div>
+    </nav>
+
+    <div class="col-md-2 list-group" id="sidebar" border: none !important>
+      <button type="button" class="list-group-item" id="middle" onclick="initMap('hour')" >Hour</button>
+      <button type="button" class="list-group-item" id="middle" onclick="initMap('day')">Day</button>
+      <button type="button" class="list-group-item" id="middle" onclick="initMap('week')">Week</button>
+      <button type="button" class="list-group-item" id="middle" onclick="initMap('month')">Month</button>
+    </div>
+    <div class="col-md-10"id="map"></div>
+
+    <style>
+    #middle{
+      text-align: center;
+      background-color: #2DAF3F;
+      color: white;
+      font-size: 120%;
+      /*border-bottom: 3px solid #1988FF;*/
+      /*margin-left: 3.5%;*/
+    }
+    </style>
+
+    <script>
+
+
+
+    // hide and showing map
+    var sidebar = false;
+    function showSidebar(){
+      if(sidebar){
+        //closing
+        sidebar = false;
+        $('#sidebar').show();
+        // $('#map').css("width", "100%");
+        $('#map').removeClass( "col-md-12" ).addClass( "col-md-10" );
+        console.log("sidebar");
+        console.log(session);
+        if (session != null){
+          initMap(session);
+        }else{
+          initMap('hour');
+        }
+
+
+
+        // initMap();
+      }else{
+        //opening
+        sidebar = true;
+        $('#sidebar').hide();
+        $('#map').removeClass( "col-md-10" ).addClass( "col-md-12" );
+        console.log("sidebar");
+        console.log(session);
+        if (session != null){
+          initMap(session);
+        }else{
+          initMap('hour');
+        }
+
+      }
+    }
+
+    </script>
+    <script>
+
+    var url;
+    var session = null;
+    var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+
+
+      var map;
+
+
+      // setTimeout(initMap(), 3000);
+      function initMap(session) {
+        var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojsonp";
+        console.log("opennnn session");
+        console.log("session : defalut "  +"url  :"+ url);
+        if (session == "hour"){
+          session = 'hour';
+          console.log("session : hour");
+          url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojsonp";
+        }
+        if (session == "day"){
+          session = 'day';
+          url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojsonp";
+        }
+        if (session == "week"){
+          session = 'week';
+          url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojsonp";
+
+        }
+        if (session == "month"){
+          session = 'month';
+          url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojsonp";
+        }
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: { lat: 13.736717, lng: 100.523186 },
+          zoom: 2,
+          styles: mapStyle,
+
+        });
+        map.data.setStyle(styleFeature);
+
+        var infowindow = new google.maps.InfoWindow({map: map});
+        if (session == null){
+        if (navigator.geolocation) {
+         navigator.geolocation.getCurrentPosition(function(position) {
+           var pos = {
+             lat: position.coords.latitude,
+             lng: position.coords.longitude
+
+           };
+
+           map.setCenter(pos);
+
+         }, function() {
+
+           handleLocationError(true, infoWindow, map.getCenter());
+         });
+       } else {
+         // Browser doesn't support Geolocation
+         handleLocationError(false, infoWindow, map.getCenter());
+       }
+     }
+
+
+        var script = document.createElement('script');
+
+        /////////
+
+        script.setAttribute(
+            'src',
+
+            url);
+
+            ////
+        document.getElementsByTagName('head')[0].appendChild(script).onclick;
+
+
+
+
+        map.data.addListener('click',function(event){
+          console.log("event.feature  : " +event.feature);
+          infowindow.setContent("<strong>" + event.feature.getProperty("title")+"</strong>"
+                                );
+
+          infowindow.setOptions({
+          position:{
+            lat: event.latLng.lat(),
+            lng: event.latLng.lng()
+          }
+        });
+          infowindow.open(map);
+        });
+      }
+
+
+
+
+
+
+
+      // Defines the callback function referenced in the jsonp file.
+      function eqfeed_callback(data) {
+
+        map.data.addGeoJson(data);
+      }
+
+      function styleFeature(feature) {
+        var low = [151, 83, 34];   // color of mag 1.0
+        var high = [5, 69, 54];  // color of mag 6.0 and above
+        var minMag = 1.0;
+        var maxMag = 6.0;
+
+        // fraction represents where the value sits between the min and max
+        var fraction = (Math.min(feature.getProperty('mag'), maxMag) - minMag) /
+            (maxMag - minMag);
+
+        var color = interpolateHsl(low, high, fraction);
+
+        return {
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            strokeWeight: 0.5,
+            strokeColor: '#fff',
+            fillColor: color,
+            fillOpacity: 2 / feature.getProperty('mag'),
+            // while an exponent would technically be correct, quadratic looks nicer
+            scale: Math.pow(feature.getProperty('mag'), 2)
+          },
+          zIndex: Math.floor(feature.getProperty('mag'))
+        };
+      }
+
+      function interpolateHsl(lowHsl, highHsl, fraction) {
+        var color = [];
+        for (var i = 0; i < 3; i++) {
+          // Calculate color based on the fraction.
+          color[i] = (highHsl[i] - lowHsl[i]) * fraction + lowHsl[i];
+        }
+
+        return 'hsl(' + color[0] + ',' + color[1] + '%,' + color[2] + '%)';
+      }
+
+      var mapStyle = [{
+        'featureType': 'all',
+        'elementType': 'all',
+        'stylers': [{'visibility': 'off'}]
+      }, {
+        'featureType': 'landscape',
+        'elementType': 'geometry',
+        'stylers': [{'visibility': 'on'}, {'color': '#fcfcfc'}]
+      }, {
+        'featureType': 'water',
+        'elementType': 'labels',
+        'stylers': [{'visibility': 'off'}]
+      }, {
+        'featureType': 'water',
+        'elementType': 'geometry',
+        'stylers': [{'visibility': 'on'}, {'hue': '#5f94ff'}, {'lightness': 50}]
+      }];
+
+
+
+    </script>
+
+
+    <!-- <script src="/Users/Apple/Desktopnodejs"></script> -->
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcuLxeG5wohtEGA8y_YTPDEiKecvONPTs&callback=initMap">
+    </script>
+  <!-- </body> -->
+
+
+  </body>
+</html>
